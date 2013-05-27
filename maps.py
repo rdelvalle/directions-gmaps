@@ -1,11 +1,6 @@
 from urllib import urlopen
 from urllib import quote
 import json
-
-# import necessary libs for json and/or xml
- 
-#print quote("Google's homepage!") # encodes data for URL use
-#print urlopen('http://www.google.com').read()
  
 def quoteStuff(objectsToQuote):
     quotedObjects = dict()
@@ -14,11 +9,9 @@ def quoteStuff(objectsToQuote):
     return quotedObjects;
  
 def main():
-    # can use "json" or "xml"
-    directionsURL = "http://maps.googleapis.com/maps/api/directions/json?"
- 
-    # params as per:
-    # http://code.google.com/apis/maps/documentation/directions/#RequestParameters
+    
+    directionsURL = "http://maps.googleapis.com/maps/api/directions/json?" # can use "json" or "xml"
+
     params = dict()
     params['origin'] = "Santa Rita 1355, La Reina, Santiago, Chile"
     params['destination'] = "Vicuna Mackenna 4860, Macul, Santiago, Chile"
@@ -28,7 +21,7 @@ def main():
     params['avoid'] = "" #optional -- needs to be "tolls" or "highways"
     params['units'] = "" #optional
     params['region'] = "" # optional
-    params['language'] = "spanish" #optional
+    params['language'] = "" #optional
     params['sensor'] = "true" # indicates if request comes from device w/GPS
  
     quotedParams = quoteStuff(params)
@@ -36,13 +29,9 @@ def main():
     for key, value in quotedParams.items():
         directionsURL = directionsURL + key + "=" + value + "&"
  
-    # chop off the trailing &
     directionsURL = directionsURL[:-1]
-    #print "url is: ", directionsURL
  
-    o = urlopen(directionsURL)
-    #print ( o.read())
-    
+    o = urlopen(directionsURL)    
     hola = o.read()
     myFile = open('data.json', 'w')
     myFile.write(hola)
